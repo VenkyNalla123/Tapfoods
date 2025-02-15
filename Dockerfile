@@ -1,14 +1,14 @@
-# Use official Tomcat 9 image with JDK 21
-FROM tomcat:9.0-jdk-21
+# Use Tomcat as the base image
+FROM tomcat:9.0
 
-# Set environment variable for Railway's dynamic port assignment
-ENV PORT=8080
+# Set working directory inside the container
+WORKDIR /usr/local/tomcat/webapps/
 
-# Copy the WAR file from the target directory to Tomcat's webapps folder
-COPY target/tapfood.war /usr/local/tomcat/webapps/ROOT.war
+# Copy the exported WAR file into Tomcat's webapps directory
+COPY TAPFOODS.war TAPFOODS.war
 
-# Expose the correct port (Railway will map it automatically)
-EXPOSE ${8080}
+# Expose Tomcat's default port
+EXPOSE 8080
 
 # Start Tomcat
-CMD ["sh", "-c", "catalina.sh run"]
+CMD ["catalina.sh", "run"]
